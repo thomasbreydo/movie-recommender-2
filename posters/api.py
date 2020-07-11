@@ -27,9 +27,10 @@ def _only_unfinished(ids):
         return ids
 
 
-def save_poster_links(posters, savepath='poster_links.csv'):
-    write_a_header = not os.path.exists(savepath)
-    posters.to_csv(savepath, mode='a', header=write_a_header)
+def save_poster_links(posters, relative_path='poster_links.csv'):
+    fullpath = _get_full_path(relative_path)
+    write_a_header = not os.path.exists(fullpath)
+    posters.to_csv(fullpath, mode='a', header=write_a_header)
 
 
 def download_poster_links(save_every=20, pbar=True):
