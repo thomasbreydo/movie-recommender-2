@@ -4,7 +4,8 @@ Add the following to the top of your file (the number of `..` traversals depends
 ```python
 import sys
 import os
-sys.path.insert(0, os.path.join('..', 'dataset'))
+sys.path.insert(0, os.path.join(
+    os.path.dirname(__file__), '..', '..', 'dataset'))
 import movielens  # noqa
 ```
 
