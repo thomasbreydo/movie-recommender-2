@@ -4,12 +4,12 @@ import pandas as pd
 _BASEPATH = os.path.dirname(__file__)
 
 
-def get_full_path_to_local_file(fname):
+def _get_full_path_to_local_file(fname):
     return os.path.join(_BASEPATH, fname)
 
 
 def get_full_path_to_dataset_file(fname, dataset_dir='ml-latest-small'):
-    return os.path.join(get_full_path_to_local_file(dataset_dir), fname)
+    return os.path.join(_get_full_path_to_local_file(dataset_dir), fname)
 
 
 def load(fname, *pd_args, **pd_kwargs):

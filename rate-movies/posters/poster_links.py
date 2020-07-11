@@ -10,15 +10,15 @@ import movielens  # noqa
 
 
 def get_finished_movie_ids(frompath='poster_links.csv'):
+    return pd.read_csv(frompath, index_col=['movieId'],
+                       usecols=['movieId', 'posters'])
+
+
+def _only_unfinished(ids):
     try:
-        return pd.read_csv(frompath, index_col=['movieId'],
-                           usecols=['movieId']).index
+        return ids[~ids.index.isin(get_finished_movie_ids().index)]
     except FileNotFoundError:
-        return []
-
-
-def only_unfinished(ids):
-    return ids[~ids.index.isin(get_finished_movie_ids())]
+        return ids
 
 
 def save_poster_links(posters, savepath='poster_links.csv'):
@@ -29,7 +29,7 @@ def save_poster_links(posters, savepath='poster_links.csv'):
 def download_poster_links(save_every=20, pbar=True):
     ids = movielens.load('links.csv', usecols=[
         'movieId', 'imdbId'], index_col='movieId')
-    ids = only_unfinished(ids)
+    ids = _only_unfinished(ids)
     posters = pd.DataFrame()
     posters.index.name = 'movieId'
 
