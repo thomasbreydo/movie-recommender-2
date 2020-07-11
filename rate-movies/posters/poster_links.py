@@ -4,7 +4,8 @@ import pandas as pd
 import movieposters
 import sys
 import os
-sys.path.insert(0, os.path.join('..', '..', 'dataset'))
+sys.path.insert(0, os.path.join(
+    os.path.dirname(__file__), '..', '..', 'dataset'))
 import movielens  # noqa
 
 
@@ -39,7 +40,7 @@ def download_poster_links(save_every=20, pbar=True):
     for i, row in iterator:
         movieId, (imdbId,) = row
         try:
-            link = movieposters.get_poster(id=movieId)
+            link = movieposters.get_poster(id=imdbId)
         except (movieposters.MovieNotFound, movieposters.PosterNotFound):
             link = np.nan
         posters.at[movieId, 'poster'] = link
