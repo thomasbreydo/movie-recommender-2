@@ -4,14 +4,20 @@ import pandas as pd
 import movieposters
 import sys
 import os
-sys.path.insert(0, os.path.join(
-    os.path.dirname(__file__), '..', '..', 'dataset'))
-import movielens  # noqa
+
+_BASEPATH = os.path.dirname(__file__)
+sys.path.insert(0, os.path.join(_BASEPATH, '..', '..'))
+import dataset  # noqa
 
 
-def get_finished_movie_ids(frompath='poster_links.csv'):
-    return pd.read_csv(frompath, index_col=['movieId'],
-                       usecols=['movieId', 'posters'])
+def _get_full_path(relative_path):
+    return os.path.join(_BASEPATH, relative_path)
+
+
+def get_finished_movie_ids(relative_path='poster_links.csv'):
+    fullpath = _get_full_path(relative_path)
+    return pd.read_csv(fullpath, index_col=['movieId'],
+                       usecols=['movieId', 'poster'])
 
 
 def _only_unfinished(ids):
@@ -27,7 +33,7 @@ def save_poster_links(posters, savepath='poster_links.csv'):
 
 
 def download_poster_links(save_every=20, pbar=True):
-    ids = movielens.load('links.csv', usecols=[
+    ids = dataset.load('links.csv', usecols=[
         'movieId', 'imdbId'], index_col='movieId')
     ids = _only_unfinished(ids)
     posters = pd.DataFrame()
