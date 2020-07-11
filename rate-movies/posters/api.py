@@ -55,6 +55,9 @@ def download_poster_links(save_every=20, pbar=True):
             # once saved, not clearing the df will result in dupes saved later
             posters = posters.iloc[0:0]
 
+    if (i + 1) % save_every != 0:  # didn't save the last batch
+        save_poster_links(posters)
+
 
 def main():
     download_poster_links()
