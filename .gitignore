@@ -1,5 +1,8 @@
 # macOS
-.DS_Store
+**/.DS_Store
+
+# Movie preferences (user-based)
+**/rate-movies/preferences/*_pref.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
