@@ -14,7 +14,7 @@ def _get_full_path(relative_path):
     return os.path.join(_BASEPATH, relative_path)
 
 
-def get_finished_movie_ids(relative_path='poster_links.csv'):
+def get_downloaded(relative_path='poster_links.csv'):
     fullpath = _get_full_path(relative_path)
     return pd.read_csv(fullpath, index_col=['movieId'],
                        usecols=['movieId', 'poster'])
@@ -22,7 +22,7 @@ def get_finished_movie_ids(relative_path='poster_links.csv'):
 
 def _only_unfinished(ids):
     try:
-        return ids[~ids.index.isin(get_finished_movie_ids().index)]
+        return ids[~ids.index.isin(get_downloaded().index)]
     except FileNotFoundError:
         return ids
 
