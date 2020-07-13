@@ -18,18 +18,22 @@ from posters import display_movie  # noqa
 _USE_DROPDOWN = False
 
 
-def full_savepath(user, fname=None):
+def _full_pref_path(user, fname=None):
     if fname is None:
         return os.path.join(_BASEPATH, 'preferences', f'{user}_pref.csv')
     else:
         return os.path.join(_BASEPATH, 'preferences', fname)
 
 
+def load_rated(user):
+    return pd.read_csv(_full_pref_path(user))
+
+
 def _save_annot(annot, user, fname=None):
     '''E.g. `save_annot((588, '4.5'), user='thomas')`'''
     df = pd.DataFrame((annot,), columns=['movieId', 'rating'])
     df['userId'] = user
-    savepath = full_savepath(user, fname)
+    savepath = _full_pref_path(user, fname)
     df.to_csv(savepath, mode='a', header=not os.path.exists(
         savepath), index=False)
 
