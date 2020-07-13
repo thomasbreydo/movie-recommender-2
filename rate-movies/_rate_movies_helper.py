@@ -12,16 +12,7 @@ _BASEPATH = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(
     _BASEPATH, '..', '..', 'movie-recommender-2'))
 import dataset  # noqa
-import posters  # noqa
-
-POSTERS_BY_ID = posters.get_downloaded()
-TITLES_BY_ID = dataset.load(
-    'movies.csv', index_col='movieId', usecols=['movieId', 'title'])
-
-
-def display_movie(movieId):
-    display(TITLES_BY_ID.at[movieId, 'title'])
-    display(Image(url=POSTERS_BY_ID.at[movieId, 'poster']))
+from posters import display_movie  # noqa
 
 
 _USE_DROPDOWN = False

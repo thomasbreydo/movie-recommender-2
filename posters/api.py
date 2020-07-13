@@ -4,7 +4,7 @@ import pandas as pd
 import movieposters
 import sys
 import os
-
+from IPython.display import display, Image
 _BASEPATH = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(_BASEPATH, '..', '..'))
 import dataset  # noqa
@@ -58,6 +58,26 @@ def download_poster_links(save_every=20, pbar=True):
 
     if (i + 1) % save_every != 0:  # didn't save the last batch
         save_poster_links(posters)
+
+
+def display_movie(movieId):
+    '''Shows movie title and poster image (loading necesarry DFs 1 time)'''
+    global _POSTERS_BY_ID  # noqa
+    global _TITLES_BY_ID  # noqa
+    try:
+        poster_url = _POSTERS_BY_ID.at[movieId, 'poster']  # noqa
+    except NameError:
+        print('downloaded')
+        _POSTERS_BY_ID = get_downloaded()
+        poster_url = _POSTERS_BY_ID.at[movieId, 'poster']
+    try:
+        title = _TITLES_BY_ID.at[movieId, 'title']  # noqa
+    except NameError:
+        _TITLES_BY_ID = dataset.load(
+            'movies.csv', index_col='movieId', usecols=['movieId', 'title'])
+        title = _TITLES_BY_ID.at[movieId, 'title']
+    display()
+    display(Image(url=poster_url))
 
 
 def main():
