@@ -27,7 +27,7 @@ def _full_pref_path(user, fname=None):
 
 
 def load_preferences(user):
-    return pd.read_csv(_full_pref_path(user))
+    return pd.read_csv(_full_pref_path(user), dtype={'rating': 'float'})
 
 
 def _annot_to_save_df_format(annot):
