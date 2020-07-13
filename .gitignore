@@ -2,7 +2,7 @@
 **/.DS_Store
 
 # Movie preferences (user-based)
-**/rate-movies/preferences/*_pref.csv
+**/rate_movies/preferences/*_pref.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

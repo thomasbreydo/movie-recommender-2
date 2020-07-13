@@ -5,10 +5,10 @@ This project uses Python to build customized movie recommendation systems!
 
 ## Step 1: Manually rate movies you've seen
 
-Go to the `rate-movies/rate_movies.ipynb` and change the `USER` variable in the top cell.
+Go to the `rate_movies/rate_movies.ipynb` and change the `USER` variable in the top cell.
 Then, run all of the cells in the notebook. The most important one is the last one, in which you will
 rate around 200 movies. (Preferences will automatically be saved to
-`rate-movies/preferences/[your username]_pref.csv`)
+`rate_movies/preferences/[your username]_pref.csv`)
 
 ## Step 2: Build a personal recommender model
 
