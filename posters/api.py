@@ -67,7 +67,6 @@ def display_movie(movieId):
     try:
         poster_url = _POSTERS_BY_ID.at[movieId, 'poster']  # noqa
     except NameError:
-        print('downloaded')
         _POSTERS_BY_ID = get_downloaded()
         poster_url = _POSTERS_BY_ID.at[movieId, 'poster']
     try:
