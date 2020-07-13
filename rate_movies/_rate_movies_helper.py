@@ -2,6 +2,7 @@
 rate_movies.ipynb SOME OTHERWISE INACCESSIBLE FUNCTIONS.'''
 
 import pandas as pd
+import numpy as np
 import random
 from ipywidgets import Button, Dropdown, HTML, HBox, IntSlider, FloatSlider, Textarea, Output
 from IPython.display import display, clear_output, Image
@@ -25,13 +26,19 @@ def _full_pref_path(user, fname=None):
         return os.path.join(_BASEPATH, 'preferences', fname)
 
 
-def load_rated(user):
+def load_preferences(user):
     return pd.read_csv(_full_pref_path(user))
+
+
+def _annot_to_save_df_format(annot):
+    '''Convert any '?' into np.nan'''
+    return (annot,) if annot[1] != '?' else ((annot[0], np.nan),)
 
 
 def _save_annot(annot, user, fname=None):
     '''E.g. `save_annot((588, '4.5'), user='thomas')`'''
-    df = pd.DataFrame((annot,), columns=['movieId', 'rating'])
+    for_df = _annot_to_save_df_format(annot)
+    df = pd.DataFrame(for_df, columns=['movieId', 'rating'])
     df['userId'] = user
     savepath = _full_pref_path(user, fname)
     df.to_csv(savepath, mode='a', header=not os.path.exists(
