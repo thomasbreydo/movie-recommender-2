@@ -3,6 +3,7 @@
 
 # Movie preferences (user-based)
 **/rate_movies/preferences/*_pref.csv
+**/recommend/models/*_model.pickle
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
