@@ -60,23 +60,33 @@ def download_poster_links(save_every=20, pbar=True):
         save_poster_links(posters)
 
 
-def display_movie(movieId):
-    '''Shows movie title and poster image (loading necesarry DFs 1 time)'''
-    global _POSTERS_BY_ID  # noqa
+def get_title(movieId):
     global _TITLES_BY_ID  # noqa
     try:
-        poster_url = _POSTERS_BY_ID.at[movieId, 'poster']  # noqa
-    except NameError:
-        _POSTERS_BY_ID = get_downloaded()
-        poster_url = _POSTERS_BY_ID.at[movieId, 'poster']
-    try:
-        title = _TITLES_BY_ID.at[movieId, 'title']  # noqa
+        return _TITLES_BY_ID.at[movieId, 'title']  # noqa
     except NameError:
         _TITLES_BY_ID = dataset.load(
             'movies.csv', index_col='movieId', usecols=['movieId', 'title'])
-        title = _TITLES_BY_ID.at[movieId, 'title']
-    display()
-    display(Image(url=poster_url))
+        return _TITLES_BY_ID.at[movieId, 'title']
+
+
+def get_poster(movieId):
+    global _POSTERS_BY_ID  # noqa
+    try:
+        return _POSTERS_BY_ID.at[movieId, 'poster']  # noqa
+    except NameError:
+        _POSTERS_BY_ID = get_downloaded()
+        return _POSTERS_BY_ID.at[movieId, 'poster']
+
+
+def display_movie(movieId, show_title=True, show_poster=True):
+    '''Shows movie title and poster image (loading necesarry DFs 1 time)'''
+    poster_url = get_poster(movieId)
+    title = get_title(movieId)
+    if show_title:
+        display(title)
+    if show_poster:
+        display(Image(url=poster_url))
 
 
 def main():
